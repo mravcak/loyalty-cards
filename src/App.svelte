@@ -1,65 +1,49 @@
 <script>
-  import Card from './components/Card.svelte';
+  import LoyaltyCard from './components/LoyaltyCard.svelte';
+  import loadCards from './util/loadCards';
 
-  const isColor = (colorString) => {
-    const s = new Option().style;
-    s.color = colorString.toLowerCase();
-    return s.color !== '';
-  }
-
-  const loadColor = (colorString) => {
-    if (isColor(colorString)) {
-      return colorString;
-    }
-    if (isColor(`#${colorString}`)) {
-      return `#${colorString}`;
-    }
-    return 'black';
-  }
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const cardString = urlParams.get('k');
-  let cards = null;
-
-  if (cardString) {
-    cards = cardString.replace(/\s/g, '').split('/').map((string) => {
-      const [name, options, bg, code] = string.split(',');
-      return {
-        name,
-        format: options === 'ean' ? 'EAN13' : '',
-        backgroundColor: loadColor(bg),
-        code,
-      };
-    })
-  }
-  console.log('Loaded card config:', cards);
+  const cards = loadCards();
 </script>
 
 <main>
-  <h1 class="title">💳 My cards</h1>
-  <div class="list">
+  <h1 class="app-title">💳 My cards</h1>
+  <div class="card-list">
     {#if cards}
       {#each cards as card}
         <div>
-          <Card
+          <LoyaltyCard
             card="{card}"
           />
         </div>
       {/each}
     {:else}
-      <p>No cards were loaded</p>
+      <div class="no-cards-loaded">
+        <h2>No cards were loaded</h2>
+        <p>Load cards in <code>name,code,options,color</code> format</p>
+        <p>e.g. <code>?c=Billa,9791287225767,ean,FFD000</code> appended to the URL</p>
+        <p>Multiple cards are separated with <code>/</code></p>
+      </div>
     {/if}
   </div>
 </main>
 
 <style>
-  .title {
+  .app-title {
     text-align: center;
     margin: 30px 0;
+    font-family: 'Fira Sans', sans-serif;
   }
-  .list {
+  .card-list {
     max-width: 500px;
     margin: 0 auto;
     text-align: center;
+  }
+  .no-cards-loaded {
+    padding: 0 20px;
+  }
+  .no-cards-loaded code {
+    background-color: rgba(0,200,255,0.2);
+    padding: 2px 4px;
+    border-radius: 4px;
   }
 </style>

@@ -17,19 +17,19 @@
 </script>
 
 <div
-  class="card"
+  class="loyalty-card"
   style="background-color: {card.backgroundColor}"
 >
   <div
-    class="card-code-wrap"
+    class="loyalty-card-code-wrap"
   >
     <svg
-      class="card-code"
+      class="loyalty-card-code"
       bind:this="{codeCanvas}"
     />
   </div>
   <h2
-    class="card-name"
+    class="loyalty-card-name"
     style="color: {color}"
   >
     {card.name}
@@ -37,14 +37,14 @@
 </div>
 
 <style>
-  .card {
-    height: 400px;
+  .loyalty-card {
+    height: 80vh;
     padding: 30px 30px 20px 30px;
     display: flex;
     flex-direction: column;
-    color: black;
+    font-family: 'Fira Sans', sans-serif;
   }
-  .card-code-wrap {
+  .loyalty-card-code-wrap {
     background-color: white;
     border-radius: 15px;
     flex: 1;
@@ -52,9 +52,16 @@
     align-items: center;
     justify-content: center;
   }
-  .card-name {
+  .loyalty-card-name {
     text-align: center;
     font-size: 60px;
     margin: 15px 0 0;
+  }
+  @media screen and (min-width: 500px) {
+    .loyalty-card {
+      height: 350px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
   }
 </style>
