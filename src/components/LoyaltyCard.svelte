@@ -5,29 +5,41 @@
 
   export let card;
   let codeCanvas;
+  let isOpen = false;
   const backgroundColor = TinyColor(card.backgroundColor);
   const color = backgroundColor.getLuminance() > 0.5  ? 'black' : 'white';
-
-  onMount(() => {
+  const renderBarcode = () => {
     JsBarcode(codeCanvas, card.code, {
       format: card.format,
       height: 150,
     })
-  });
+  };
+  const triggerDisplay = () => {
+    isOpen = !isOpen;
+    setTimeout(() => {
+      if (isOpen) {
+        renderBarcode();
+      }
+    }, 0)
+  };
 </script>
 
 <div
   class="loyalty-card"
   style="background-color: {card.backgroundColor}"
+  on:click="{triggerDisplay}"
+  on:keydown="{triggerDisplay}"
 >
-  <div
-    class="loyalty-card-code-wrap"
-  >
-    <svg
-      class="loyalty-card-code"
-      bind:this="{codeCanvas}"
-    />
-  </div>
+  {#if isOpen}
+    <div
+      class="loyalty-card-code-wrap"
+    >
+      <svg
+        class="loyalty-card-code"
+        bind:this="{codeCanvas}"
+      />
+    </div>
+  {/if}
   <h2
     class="loyalty-card-name"
     style="color: {color}"
@@ -38,8 +50,7 @@
 
 <style>
   .loyalty-card {
-    height: 80vh;
-    padding: 30px 30px 20px 30px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     font-family: 'Fira Sans', sans-serif;
@@ -47,19 +58,19 @@
   .loyalty-card-code-wrap {
     background-color: white;
     border-radius: 15px;
-    flex: 1;
+    height: 300px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .loyalty-card-name {
     text-align: center;
-    font-size: 60px;
-    margin: 15px 0 0;
+    font-size: 50px;
+    margin: 0;
   }
   @media screen and (min-width: 500px) {
     .loyalty-card {
-      height: 350px;
       border-radius: 20px;
       margin-bottom: 20px;
     }
