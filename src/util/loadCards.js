@@ -22,11 +22,18 @@ const parseCardString = (cardString) => {
   })
 }
 
-const loadCards = () => {
+const loadCards = (providedCardString) => {
   let cardString = null;
   let cards = null;
   const urlParams = new URLSearchParams(window.location.search);
 
+  if (window.localStorage.getItem('cardString')) {
+    cardString = window.localStorage.getItem('cardString');
+  }
+  if (providedCardString) {
+    cardString = providedCardString;
+    window.localStorage.setItem('cardString', providedCardString);
+  }
   if (urlParams.get('c')) {
     cardString = urlParams.get('c');
   }

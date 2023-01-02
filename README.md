@@ -1,6 +1,6 @@
 # Loyalty Cards
 
-Simple loyalty card web app. Doesn't do anything other than display the cards, doesn't store cards anywhere. Cards are simply provided by query string at runtime.
+Simple loyalty card web app. Doesn't do anything other than display the cards. Cards are simply provided by query string at runtime.
 
 **Demo:** [https://projects.mravcak.com/loyalty-cards/](https://projects.mravcak.com/loyalty-cards/)
 
@@ -18,6 +18,8 @@ Cards are provided to the app with *cardstring* that can be passed either as `c`
 Example *cardstring* passed as `c` query variable:
 
 `?c=ShopA,9275161801006,ean,FFD000/ShopB,5903438605326,ean,006DAF`
+
+Alternatively, you can provide *cardstring* by direct input in app. In this case, *cardstring* is cached in localStorage.
 
 ## Usage
 

@@ -2,7 +2,15 @@
   import LoyaltyCard from './components/LoyaltyCard.svelte';
   import loadCards from './util/loadCards';
 
-  const cards = loadCards();
+  let cards = null;
+  cards = loadCards();
+
+  const inputCardsManually = () => {
+    const providedCardString = prompt('Insert cards');
+    if (providedCardString) {
+      cards = loadCards(providedCardString);
+    }
+  }
 </script>
 
 <main>
@@ -24,6 +32,13 @@
         <p>Multiple cards are separated with <code>/</code></p>
       </div>
     {/if}
+    <button
+      class="button"
+      on:click="{inputCardsManually}"
+      on:keydown="{inputCardsManually}"
+    >
+      Load cards manually
+    </button>
   </div>
 </main>
 
@@ -45,5 +60,13 @@
     background-color: rgba(0,200,255,0.2);
     padding: 2px 4px;
     border-radius: 4px;
+  }
+  .button {
+    border: 0;
+    padding: 4px 12px;
+    margin: 20px 0;
+    background-color: rgba(255,255,255,0.7);
+    color: black;
+    border-radius: 50px;
   }
 </style>
